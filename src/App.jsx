@@ -5,6 +5,7 @@ import { MasterForm } from './components/MasterForm'
 import { ListItems } from './components/ListItems'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { PurchaseOrder } from './components/purchase/PurchaseOrder'
+import { OrderList } from './components/purchase/OrderList'
 
 
 
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<PurchaseOrder />} />
           <Route path="/create-item" element={<MasterForm />} />
+          <Route path='/order' element={<OrderList/>} />
         </Routes>
       </Router>
     </>

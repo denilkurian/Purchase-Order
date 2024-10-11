@@ -1,8 +1,14 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Module 1: Item Master
 
-Currently, two official plugins are available:
+    Forms for adding products,List the created projects, context API for passing the product data (MasterForm.jsx,ListItem.jsx,ContextItem.jsx)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Module 2: Purchase Order
+
+    Added Product displayed , Cart for adding products, context API for passing the cart data (PurchaseOrder.jsx,ContextOrder.jsx)
+
+### Module 3: Print Purchased Order
+
+    Purchased(Placed) Order listed and option for print invoice (OrderList.jsx)
+

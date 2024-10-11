@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { ItemsContext, ModalContext } from '../ContextItems'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaPlus, FaShoppingCart, FaDollarSign, FaMinus } from 'react-icons/fa';
+import { OrderContext } from './ContextOrder'
 
 
 export const PurchaseOrder = () => {
@@ -13,9 +14,9 @@ export const PurchaseOrder = () => {
 
     const navigate = useNavigate()
 
-    const [total, setTotal] = useState(0)
+    const { total, setTotal } = useContext(OrderContext)
+    const { allitems, setAllitem } = useContext(OrderContext)
 
-    const [allitems, setAllitem] = useState([])
 
     const [item, setItem] = useState({
         item_no: '',
@@ -55,7 +56,7 @@ export const PurchaseOrder = () => {
         if (!found) {
             const newitem = { ...item, item_no: indices, item_name: val.item_name, brand: val.brand, stock_unit: val.stock_unit, unit_price: val.unit_price, order_quantity: 1, net_amount: val.unit_price }
             setItem(newitem)
-            setAllitem([...allitems, newitem])
+            setAllitem((prevItems) => [...prevItems, newitem]);
         }
     }
 
@@ -83,14 +84,16 @@ export const PurchaseOrder = () => {
 
             setAllitem(filtered_allitems)
         }
+
     }
 
-
+    let net_amounts = 0
     // Grand Total Calculating
     const changetotal = () => {
-        let net_amounts = 0
-        for (let i = 0; i < allitems.length; i++) {
-            net_amounts += allitems[i].net_amount
+
+        const newallitems = [...allitems]
+        for (let i = 0; i < newallitems.length; i++) {
+            net_amounts += Number(newallitems[i].net_amount);
         }
         setTotal(net_amounts)
     }
@@ -101,12 +104,26 @@ export const PurchaseOrder = () => {
 
 
 
+
+    const nav = useNavigate()
+
+    const handlePurchase = (e) => {
+        e.preventDefault()
+
+        const confirmation = confirm('Are You Sure to buy this order?');
+        if (confirmation) {
+            nav('/order');
+        }
+    }
+
+
     return (
-        <div>
+        <div >
             <Navbar />
             <br /><br />
-            <center><button>  Purchase Items</button></center>
-            <form className='flex justify-center'>
+
+            <center><h4 className='text-blue-800 '>Welcome to BR ELECTRONICS -- Purchase Items</h4></center>
+            <form className='flex justify-center py-5'>
                 <>
                     <div class="relative overflow-x-auto max-w-[1100px]">
 
@@ -154,7 +171,7 @@ export const PurchaseOrder = () => {
                                         <td>
                                             <button onClick={(e) => handleCart(e, val, index)} className='flex focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'>Cart<span className='flex items-center pl-2'><FaPlus /></span></button>
                                         </td>
-                                    </tr>)) : (<div className='flex gap-2'><p>Nothing Added for purchasing</p> <button onClick={handleModal} className='text-blue-600' >Add</button></div>)}
+                                    </tr>)) : (<div className='flex gap-2'><p>Nothing Added for purchasing</p> <button onClick={handleModal} className='flex focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-green-800focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' >Add</button></div>)}
                             </tbody>
                         </table>
                     </div>
@@ -166,7 +183,7 @@ export const PurchaseOrder = () => {
             <br /><br /><br />
 
 
-            <div className='max-w-4xl mx-auto border-2 bg-cyan-100'>
+            <div className='max-w-4xl mx-auto border-2 bg-blue-200 py-7'>
                 <center><p className='py-3'>Cart Items</p></center>
                 <form className='flex justify-center py-8'>
                     <>
@@ -224,7 +241,7 @@ export const PurchaseOrder = () => {
 
                                     </tbody>
 
-                                )) : (<div className='flex gap-2'><p>OOPS CART EMPTY</p> </div>)}
+                                )) : (<div className='flex gap-2'><p className='py-6'>Your Cart is empty</p> </div>)}
                             </table>
                         </div>
 
@@ -233,7 +250,7 @@ export const PurchaseOrder = () => {
 
                 </form>
                 <div className='flex justify-center gap-6'><p className='text-2xl'>Grand Total: {total}</p>
-                    {allitems.length > 0 && (<button className='flex text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900'>Place Order</button>
+                    {allitems.length > 0 && (<button onClick={handlePurchase} className='flex text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900'>Place Order</button>
                     )}
                 </div>
 

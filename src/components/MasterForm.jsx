@@ -13,7 +13,8 @@ export const MasterForm = () => {
 
     const suppliers = ['Tech Distributors', 'Global Electronics', 'ProConnect Supply', 'ABC Wholesalers', 'Electro World'];
     const [filteredSuppliers, setFilteredSuppliers] = useState([]);
-    const [selectedSupplier, setSelectedSupplier] = useState('');
+
+
 
     const { submittedItems, setSubmittedItems } = useContext(ItemsContext);
 
@@ -35,14 +36,13 @@ export const MasterForm = () => {
 
 
     const handlefileChange = (e) => {
-        const files = Array.from(e.target.files); // Convert FileList to array
-        SetImages([...myimages, ...files]); // Update the images state
+        const files = Array.from(e.target.files);
+        SetImages([...myimages, ...files]);
 
-        // Generate fake URLs and update items state with these URLs
         const fakeurls = files.map((file) => URL.createObjectURL(file));
         setItems({
             ...items,
-            images: [...items.images, ...fakeurls] // Append new image URLs to items.images
+            images: [...items.images, ...fakeurls]
         });
     };
 
@@ -66,6 +66,7 @@ export const MasterForm = () => {
         const updatedModal = { ...modal, itemsdisplay: true, formsdisplay: false };
         setModal(updatedModal)
         setSelectedSupplier('')
+        console.log(items)
     }
 
 
@@ -76,7 +77,7 @@ export const MasterForm = () => {
         setModal(updatedModal)
     }
 
-
+    const [selectedSupplier, setSelectedSupplier] = useState('');
 
     // Supplier search
     const handleSupplierChange = (e) => {
@@ -86,6 +87,7 @@ export const MasterForm = () => {
         );
         setFilteredSuppliers(updatedSuppliers);
         setSelectedSupplier(value);
+        setItems({ ...items, supplier: value })
     };
 
     const handleSupplierSelect = (supplier) => {

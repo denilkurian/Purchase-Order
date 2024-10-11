@@ -1,14 +1,11 @@
 .master-background {
     margin: auto;
-
     background-image: url('https://img.freepik.com/premium-vector/new-shiny-mobile-cellphone-with-reflection-screen_255502-71.jpg');
     background-repeat: no-repeat;
     background-position: left;
     background-size: cover;
     min-height: 100vh;
 }
-
-
 
 
 .form {
@@ -33,14 +30,14 @@ label {
 
 
 @font-face {
-    font-family: 'Nekst';
-    src: url('./Demo_Fonts/Fontspring-DEMO-nekst-light.otf') format('opentype');
+    font-family: 'Poppins';
+    src: url('./Demo_Fonts/Poppins-Light.ttf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
 
 * {
-    font-family: 'Nekst';
+    font-family: 'Poppins';
 }
 
 
@@ -74,3 +71,49 @@ label {
 }
 
 
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+.fade-in {
+    animation: fadeIn 3s ease;
+}
+
+
+
+@media print {
+    .landing-bg {
+        background: none;
+    }
+
+    button {
+        display: none; 
+    }
+
+ 
+    table {
+        width: 100%; 
+        border-collapse: collapse; 
+    }
+
+    th, td {
+        border: 1px solid black; 
+        padding: 8px;
+    }
+
+    h1, h2, h3, p {
+        color: black; 
+    }
+}

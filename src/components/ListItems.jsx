@@ -96,7 +96,7 @@ export const ListItems = () => {
                     {item.unit_price}
                   </td>
                   <td class="px-6 py-4">
-                    {item.status}
+                    {item.status ? (<p>Available</p>) : (<p>Not available</p>)}
                   </td>
                   <td class="px-6 py-4 flex gap-5">
                     {item.images.map((img) =>
